@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Retrofit Analysis</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Hakim El Hattab">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/wx.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section style="margin-top:2%" data-markdown>
+                    <script type="text/template">
+                        <span style="font-size:100px">Retrofit Analysis</span>
+
+
+                        
+                                        
+
+                        <small>
+                            <a href="http://mrfu.me/">MrFu</a> /
+                            <a href="https://github.com/mrfufufu">@MrFuFuFu</a>
+                        </small>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## introduction 
+
+                        <img src="attach/httpworkflow.png"/>
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## What is the Retrofit? 
+
+                        *A type-safe HTTP client for Android and Java*
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## How to use it?
+
+                        <img src="attach/howtouseit.png"/>
+                        <!-- .element: class="fragment" -->
+
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## When to do build request?
+
+                        *Use annotations to describe the HTTP request*
+                        <!-- .element: class="fragment" -->
+
+                        *Annotations on the interface methods and its parameters indicate how a request will be handled.*
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        HttpUrlConnection request way
+
+                        <img src="attach/oldmethod.png"/>
+                        <!-- .element: class="fragment" -->
+
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        Annotation Types
+
+                        <img src="attach/annotation.png"/>
+                        <!-- .element: class="fragment" -->
+
+                    </script>
+                </section>
+
+                <section data-markdown data-transition="convex">
+                    <script type="text/template">
+                        ## Executor
+
+                        <blockquote class="fragment"><p>*CallAdapter!*</p></blockquote>
+                        <!-- .element: class="fragment" -->
+
+                        <img src="attach/calladapter.png"/>
+                        <!-- .element: class="fragment" -->
+
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        Call
+
+                        <img src="attach/call.png"/>
+                        <!-- .element: class="fragment" -->
+
+                    </script>
+                </section>
+
+                <section data-markdown data-transition="convex">
+                    <script type="text/template">
+                        ## Show code
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/platform.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ```java
+                        mWebService = retrofit.create(HaiHuService.class);
+                        ```
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/servicemethod.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/interface.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        - Retrofit build
+
+                        - Retrofit create proxy for API interface
+
+                        - API method intercepted by proxy
+
+                        - parse params with ServiceMethod
+
+                        - build HttpCall with params
+
+                        - CallAdapter adapts Call to T
+
+                        - enqueue() waiting for callback
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Question: how to encrypt?
+
+                        <blockquote class="fragment"><p>*encrypt!*</p></blockquote>
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        HttpUrlConnection，对 OutputStream write 进行加密
+                        ```java
+                        os = conn.getOutputStream();
+                        byte[] compressData = compress(content);
+                        os.write(RC4Util.decry_RC4(compressData, RC4_KEY));
+                        os.flush();
+                        ```
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        GsonConverterFactory
+
+                        <img src="attach/gsonconverter.png"/>
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ```java
+                        Retrofit.build()
+                            OkHttpClient
+                            callbackExecutor
+                            callAdapter
+                            convertor
+                        return retrofit
+                        ```
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Question: Frequently resolution annotation, performance loss?
+
+                        <blockquote class="fragment"><p>*cache!*</p></blockquote>
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/loadservicemethod.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ```java
+                        ServiceMethod serviceMethod = loadServiceMethod(method);
+                        OkHttpCall okHttpCall = new OkHttpCall<>(serviceMethod, args);
+                        Call call = callFactory.newCall();
+                        return serviceMethod.callAdapter.adapt(okHttpCall);
+                        ```
+                    </script>
+                </section>
+
+                <section data-markdown data-transition="convex">
+                    <script type="text/template">
+                        ## go on, ServiceMethod
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/servicemethodbuild.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        Adapter type:
+
+                        <img src="attach/call11.png"/>
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        Q: How to know use which one adapter?
+
+                        <img src="attach/returntype.png"/>
+                        <!-- .element: class="fragment" -->
+                        
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/nextcall.png"/>
+                        
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/getreall.png"/>
+
+                        Here *Call.class* is 
+                        <img src="attach/reprot.png"/>
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        RxJavaCallAdapterFactory
+
+                        <img src="attach/rxjavaadapter.png"/>
+
+                        Here *Observable.class* is 
+                        <img src="attach/rxjavaresponse.png"/>
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ```java
+                        ServiceMethod.build()
+                            createCallAdapter
+                            createConvertor
+                            pareseAnnotation
+                        ```
+                    </script>
+                </section>
+
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/reprot.png"/>
+
+                        Call -> ExecutorCallbackCall  (ExecutorCallAdapterFactory)
+                    </script>
+                </section>
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        *delegate* is OkHttpCall, .enqueue to do network request
+
+                        <img src="attach/network.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/call11.png"/>
+
+                        *All these are through OkHttpCall to do HTTP client*
+                        <!-- .element: class="fragment" -->
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/realcall.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ```java
+                        ExecutorCallbackCall<> callAdapter.adapt(OkHttpCall<>)
+                        ExecutorCallbackCall.enqueue(new Callback()){
+                                okHttpCall.enqueue(new Callback1){
+                                    handler.post(new Runnable(){
+                                        callback.onResponse....
+                                    })
+                                }
+                            }
+                        ```
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        Q: Where is the converter call?
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/okhttpclien.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/parseresponse.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/toresponse.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        A: ServiceMethod just like a controller
+                    </script>
+                </section>
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/1.png"/>
+                    </script>
+                </section>
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/2.png"/>
+                    </script>
+                </section>
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        OkHttpCall
+
+                        <img src="attach/3.png"/>
+                    </script>
+                </section>
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/4.png"/>
+                    </script>
+                </section>
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        ```java
+                        requestConvertor
+                        okhttp3.Request = okHttpCall.toRequest()
+                        responseConvertor
+                        //转化成 retrofit 中需要的 response
+                        Retrofit.Response = okhttpCall.toResponse();
+                        ```
+                    </script>
+                </section>
+
+
+                <section data-markdown>
+                    <script type="text/template">
+                        <img src="attach/arti.png"/>
+                    </script>
+                </section>
+
+                <section data-markdown>
+                    <script type="text/template">
+                        # *Question*
+
+                        Hey, do not be shy.
+
+                    </script>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>THE END</h1>
+
+                    <h5>MrFu</h5>
+                    <small>
+                        <a href="http://mrfu.me">Blog</a> /
+                        <a href="https://github.com/MrFuFuFu">GitHub</a>
+                    </small>
+                </section>
+            </div>
+        </div>
+
+        <pre style="display:none"><code> force highlight.js work </code></pre>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+        <script type="text/javascript">
+            function codeEditor(){
+                var nodes = document.querySelectorAll("code");
+                for (var i = 0; i < nodes.length; i++) {
+                    nodes[i].setAttribute("contenteditable", '');
+                }
+                console.log('code editable now.');
+            }
+            window.codeEditor = codeEditor;
+
+            document.addEventListener('DOMContentLoaded', function(){
+                setTimeout(function(){
+                    codeEditor();
+                },1000)
+            })
+        </script>
+    </body>
+</html>
