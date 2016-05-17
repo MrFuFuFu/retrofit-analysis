@@ -17,6 +17,9 @@
 
 ### Thanks
 
+[Retrofit分析-漂亮的解耦套路](http://www.jianshu.com/p/45cb536be2f4)
+
+[Retrofit分析-漂亮的解耦套路v](http://www.stay4it.com/course/22/info)
+
 [Reveal.js](http://lab.hakim.se/reveal-js)
-[huangxuan](http://huangxuan.me/2015/07/09/js-module-7day/)
 
